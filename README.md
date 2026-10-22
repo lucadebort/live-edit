@@ -28,15 +28,39 @@ by hand.
 
 No CMS, no database, no build step, no account. The site stays a folder of HTML.
 
-## Quick start
+## Will it work on my site?
 
-You need Node 22.18 or newer.
+Take a sentence you'd like to change, open your `.html` files in a code editor
+and search for it.
+
+- **Found it, as plain text in an `.html` file?** live-edit will work.
+- **Found it in a `.jsx`, `.tsx`, `.vue`, `.svelte`, `.md` or `.mdx` file, or in a CMS?** It won't. The HTML your browser shows is generated, so there's no file for live-edit to patch.
+- **Found it only inside a `dist/`, `build/` or `out/` folder?** It will look like it works, but your next build will overwrite every change. Don't use it there.
+
+You also need:
+
+- **Node.js 22.18 or newer.** Check with `node --version`, get it from [nodejs.org](https://nodejs.org).
+- **git**, because `npx` downloads live-edit straight from this repository.
+
+Tested on macOS. Linux should work the same; Windows hasn't been tried yet.
+
+## Use it on your site
+
+**1. Start it** from the folder of your site:
 
 ```bash
-npx github:lucadebort/live-edit ./site --open
+cd my-site
+npx github:lucadebort/live-edit#v0.1.0 . --open
 ```
 
-Then press **Edit** in the bottom left corner (or `Alt+E`), click any text and type.
+The first run downloads and builds live-edit, which takes a minute. After that it
+starts in a second. Your browser opens on the site, served from
+`http://localhost:3000`.
+
+Instead of `.` you can pass a single page (`about.html`) or a folder (`landing`),
+and only that becomes editable. See [below](#make-only-part-of-a-site-editable).
+
+**2. Edit.** Press **Edit** in the bottom left corner (or `Alt+E`), click any text and type.
 
 | Key | |
 | --- | --- |
@@ -45,7 +69,15 @@ Then press **Edit** in the bottom left corner (or `Alt+E`), click any text and t
 | `Escape` | Cancel |
 | `Alt+E` | Toggle edit mode |
 
-Click an image to replace it with a file from your computer.
+Click an image to replace it with a file from your computer. The new file is
+copied into an `uploads/` folder next to the page.
+
+**3. Commit.** Every save is already in your `.html` files, so `git diff` shows
+exactly what changed. Commit and push the way you always do, including the
+`uploads/` folder if you replaced images. live-edit never commits, pushes or
+deploys anything for you.
+
+Stop the server with `Ctrl+C` in the terminal.
 
 ## Make only part of a site editable
 
@@ -53,20 +85,34 @@ Point live-edit at the page or folder people are allowed to touch, and use
 `--root` to serve the whole site around it:
 
 ```bash
-live-edit landing --root .
+npx github:lucadebort/live-edit#v0.1.0 landing --root . --open
 ```
 
 The full site loads as usual, with its shared `/assets`, but the Edit button
 only appears on pages inside `landing/`. Everywhere else the server refuses to
 save, even if someone calls it directly.
 
-A small script in the site's repo is all a teammate needs:
+You need `--root` whenever your pages load files with absolute paths
+(`/assets/style.css`). Without it, live-edit serves only the `landing` folder and
+those files come back as 404s, so the page shows up unstyled.
+
+## Share it with your team
+
+Commit a small script to the site's repo, so nobody has to remember the command:
 
 ```bash
 #!/bin/bash
+# edit.sh: edit the landing page in the browser
 cd "$(dirname "$0")"
-exec npx --yes github:lucadebort/live-edit#v0.1.0 landing --root . --open
+exec npx --yes github:lucadebort/live-edit#v0.1.0 landing --root . --open "$@"
 ```
+
+Make it executable once with `chmod +x edit.sh`, and from then on a teammate
+runs `./edit.sh`. The `#v0.1.0` at the end pins the version, so an update
+here never changes things under their feet. Bump it when you want the new one.
+
+If you deploy by uploading a folder, check that your deploy script skips
+`edit.sh`. It's harmless on a server, but it doesn't belong there.
 
 ## Options
 
@@ -122,6 +168,50 @@ A few more limits worth knowing:
 - **Text only.** Bold, links and new elements still go through your code editor.
 - **`<picture>` sources.** Replacing an image changes the `<img>` only. If the page has `<source>` elements (WebP, AVIF), the browser keeps showing those until you update them too.
 - **Saving is not publishing.** live-edit writes the file. Committing, pushing and deploying stay your call.
+
+## When something doesn't work
+
+**I click the text and nothing happens.**
+Check that edit mode is on (the **Edit** button is blue). If it is, that text
+isn't in your HTML file: the page's JavaScript created it, or it comes from a
+framework. See [Will it work on my site?](#will-it-work-on-my-site)
+
+**There's no Edit button on the page.**
+The page is outside what you made editable. If you started live-edit with a
+folder or a page plus `--root`, only that folder or page gets the button.
+
+**The page loads without styles or images.**
+Your site uses absolute paths like `/assets/...`. Start live-edit from the
+site's root folder, or add `--root .` (or `--root` plus the path to it).
+
+**"The file changed on disk. Reload the page."**
+The file was modified after the page loaded: in your editor, by a `git pull`,
+or by a teammate on a shared folder. live-edit refuses to save so it doesn't
+overwrite that change. Reload and redo your last edit.
+
+**I replaced an image but the old one still shows.**
+The image sits inside a `<picture>` with `<source>` elements (WebP, AVIF), and
+the browser prefers those. Update or remove the `<source>` lines in your code
+editor.
+
+**My changes disappeared after a build.**
+You were editing generated files (`dist/`, `build/`, `out/`). The build writes
+them again from the real sources, which live-edit can't reach.
+
+**`npx` fails with a git or permission error.**
+Make sure git is installed (`git --version`) and that you can reach github.com.
+
+**`command not found: npx`, or errors about the Node version.**
+Install or update Node.js from [nodejs.org](https://nodejs.org), version 22.18 or newer.
+
+**Port 3000 is busy.**
+Nothing to do: live-edit takes the next free port and prints the address in the
+terminal. Use `--port` to pick one yourself.
+
+**I want to undo a save.**
+`git checkout -- page.html` brings back the last committed version. For earlier
+saves in the same session, every previous version is kept in
+`~/.cache/live-edit/`, last 20 per file.
 
 ## Development
 
