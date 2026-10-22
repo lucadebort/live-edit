@@ -1,0 +1,34 @@
+{
+  "name": "live-edit",
+  "version": "0.1.0",
+  "description": "Edit the text of a static HTML page in the browser, saved straight to the source file.",
+  "scripts": {
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig.client.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.client.json --noEmit",
+    "test": "node --test \"test/**/*.test.ts\"",
+    "prepare": "npm run build"
+  },
+  "license": "UNLICENSED",
+  "type": "module",
+  "dependencies": {
+    "parse5": "^8.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "typescript": "^7.0.2"
+  },
+  "bin": {
+    "live-edit": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=22.18"
+  },
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucadebort/live-edit.git"
+  }
+}
