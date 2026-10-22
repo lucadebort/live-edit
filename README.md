@@ -225,6 +225,10 @@ npm link           # makes `live-edit` available everywhere
 
 TypeScript, one runtime dependency ([parse5](https://github.com/inikulin/parse5)).
 
+## License
+
+[MIT](LICENSE). Use it, change it, ship it with your client work.
+
 <br>
 
 <div align="center">

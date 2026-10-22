@@ -8,7 +8,7 @@
     "test": "node --test \"test/**/*.test.ts\"",
     "prepare": "npm run build"
   },
-  "license": "UNLICENSED",
+  "license": "MIT",
   "type": "module",
   "dependencies": {
     "parse5": "^8.0.1"
