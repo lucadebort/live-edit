@@ -67,7 +67,7 @@
     <rect x="64" y="568" width="160" height="36" rx="18" fill="#18181B"/>
   </g>
   <rect x="70" y="574" width="76" height="24" rx="12" fill="#3B6CF6"/>
-  <text x="108" y="590" text-anchor="middle" class="sans" font-size="12" font-weight="600" fill="#FFFFFF">Edit ⌥E</text>
+  <text x="108" y="590" text-anchor="middle" class="sans" font-size="12" font-weight="600" fill="#FFFFFF">Edit E</text>
   <circle cx="161" cy="586" r="3.5" fill="#3DDC84"/>
   <text x="171" y="590" class="sans" font-size="12" fill="#B4B1AA">Saved</text>
 

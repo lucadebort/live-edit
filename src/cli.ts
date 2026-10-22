@@ -74,7 +74,7 @@ console.log(`
   serving     ${root}${entry ? `\n  editable    ${entry}` : ""}
   backups     ${backups}
 
-  Edit mode: button bottom left, or Alt+E. Ctrl+C to stop.
+  Edit mode: button bottom left, or press E. Ctrl+C to stop.
 `);
 
 if (values.open) {

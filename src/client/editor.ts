@@ -126,15 +126,28 @@ function setStatus(status: Status, detail = "") {
     post(window.top!, { source: "live-edit", type: "status", status, detail });
 }
 
+// A bare key, like Figma or Gmail: every modifier combo collides with something
+// (Alt types characters on many layouts, Cmd/Ctrl belong to the browser).
 function onShortcut(e: KeyboardEvent) {
-  if (e.altKey && e.code === "KeyE" && !editing) {
+  if (editing || e.metaKey || e.ctrlKey || e.altKey || isTyping(e.target)) return;
+  if (e.key.toLowerCase() === "e" && !e.repeat) {
     e.preventDefault();
     e.stopPropagation();
     setEditMode(!editMode);
-  } else if (e.key === "Escape" && editMode && !editing) {
+  } else if (e.key === "Escape" && editMode) {
     e.stopPropagation();
     setEditMode(false);
   }
+}
+
+function isTyping(target: EventTarget | null): boolean {
+  if (!(target instanceof HTMLElement)) return false;
+  return (
+    target.isContentEditable ||
+    target instanceof HTMLInputElement ||
+    target instanceof HTMLTextAreaElement ||
+    target instanceof HTMLSelectElement
+  );
 }
 
 // ─── Targeting ───────────────────────────────────────────────────────────────
@@ -203,7 +216,6 @@ function startEditing(el: HTMLElement) {
   setHovered(null);
 
   const before = el.innerHTML;
-  let reverted = false;
   el.contentEditable = "plaintext-only";
   el.spellcheck = false;
   el.focus();
@@ -228,10 +240,10 @@ function startEditing(el: HTMLElement) {
       e.preventDefault();
       el.blur();
     } else if (e.key === "Escape") {
+      // Escape always means "done": keep the text, then leave edit mode.
       e.preventDefault();
-      reverted = true;
-      el.innerHTML = before;
       el.blur();
+      setEditMode(false);
     }
   }
 
@@ -252,7 +264,7 @@ function startEditing(el: HTMLElement) {
     el.removeAttribute("contenteditable");
     el.removeAttribute("spellcheck");
     editing = null;
-    if (!reverted && el.innerHTML !== before) {
+    if (el.innerHTML !== before) {
       submit(
         { type: "text", id: Number(el.getAttribute(ID)), html: el.innerHTML },
         el,
@@ -411,11 +423,12 @@ const STATUS_LABEL: Record<Status, string> = {
 };
 
 class Toolbar {
+  private host: HTMLElement;
   private toggle: HTMLButtonElement;
   private status: HTMLElement;
 
   constructor(onToggle: () => void) {
-    const host = document.createElement("live-edit-bar");
+    const host = (this.host = document.createElement("live-edit-bar"));
     host.setAttribute(UI, "");
     const shadow = host.attachShadow({ mode: "open" });
     shadow.innerHTML = `
@@ -468,10 +481,36 @@ class Toolbar {
         .status[data-state="stale"]::before { background: var(--warn); }
         .status[data-state="error"], .status[data-state="stale"] { color: var(--fg); }
         @keyframes pulse { 50% { opacity: 0.3; } }
-        @media (prefers-reduced-motion: reduce) { .status::before { animation: none !important; } }
+        .frame {
+          position: fixed; inset: 0; pointer-events: none;
+          box-shadow: inset 0 0 0 3px var(--accent);
+          opacity: 0; transition: opacity 160ms ease;
+        }
+        .badge {
+          position: fixed; top: 0; left: 50%; pointer-events: none;
+          display: flex; align-items: center; gap: 6px;
+          height: 26px; padding: 0 12px; border-radius: 0 0 8px 8px;
+          background: var(--accent); color: #fff; white-space: nowrap;
+          opacity: 0; transform: translate(-50%, -100%);
+          transition: opacity 160ms ease, transform 200ms cubic-bezier(0.2, 0, 0, 1);
+        }
+        .badge span { color: rgb(255 255 255 / 0.75); }
+        :host([data-on]) .frame { opacity: 1; }
+        :host([data-on]) .badge { opacity: 1; transform: translate(-50%, 0); }
+        .off-label, :host([data-on]) .on-label { display: contents; }
+        .on-label, :host([data-on]) .off-label { display: none; }
+        @media (prefers-reduced-motion: reduce) {
+          .status::before { animation: none !important; }
+          .frame, .badge { transition: none; }
+        }
       </style>
+      <div class="frame"></div>
+      <div class="badge">Edit mode <span>· click any text</span></div>
       <div class="bar">
-        <button type="button" aria-pressed="false">Edit <kbd>⌥E</kbd></button>
+        <button type="button" aria-pressed="false">
+          <span class="off-label">Edit <kbd>E</kbd></span>
+          <span class="on-label">Done <kbd>Esc</kbd></span>
+        </button>
         <span class="status" role="status" data-state="idle">Ready</span>
       </div>
     `;
@@ -483,6 +522,7 @@ class Toolbar {
 
   setMode(on: boolean) {
     this.toggle.setAttribute("aria-pressed", String(on));
+    this.host.toggleAttribute("data-on", on);
   }
 
   setStatus(state: Status, detail = "") {
