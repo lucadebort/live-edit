@@ -66,15 +66,10 @@ starts in a second. Your browser opens on the site, served from
 Instead of `.` you can pass a single page (`about.html`) or a folder (`landing`),
 and only that becomes editable. See [below](#make-only-part-of-a-site-editable).
 
-**2. Edit.** Press **Edit** in the bottom left corner (or press `E`), click any text and type.
-
-| Key | |
-| --- | --- |
-| `Enter` | Save |
-| `Shift+Enter` | Line break |
-| `E` | Enter edit mode (when you're not typing) |
-| `Escape` | Leave edit mode, saving the text you're in |
-| `⌘Z` / `Ctrl+Z` | Undo while you're still typing |
+**2. Edit.** Press **Edit** in the bottom left corner (or just `E`), click any
+text and type. `Enter` saves. While edit mode is on, a blue frame runs around
+the window and the button reads **Done**, so you always know where you are.
+The full list of keys is [below](#keyboard-shortcuts).
 
 Click an image to replace it with a file from your computer. The new file is
 copied into an `uploads/` folder next to the page.
@@ -85,6 +80,23 @@ exactly what changed. Commit and push the way you always do, including the
 deploys anything for you.
 
 Stop the server with `Ctrl+C` in the terminal.
+
+## Keyboard shortcuts
+
+| Key | What it does |
+| --- | --- |
+| `E` | Enter edit mode |
+| `Enter` | Save the text and close it |
+| `Shift+Enter` | Line break |
+| `Escape` | Leave edit mode. The text you're in is saved first |
+| `⌘Z` / `Ctrl+Z` | Undo, while the text is still open |
+
+`E` works only when you're not typing, so it never ends up in your copy or in a
+form on the page. There's no shortcut that throws an edit away: to go back on a
+saved change, see [I want to undo a save](#when-something-doesnt-work).
+
+To move from one text to the next, press `Enter` or just click the next one.
+The previous text is saved as you leave it.
 
 ## Make only part of a site editable
 

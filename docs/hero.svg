@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
   <title id="title">live-edit</title>
-  <desc id="desc">A wireframe web page in edit mode: one paragraph is outlined and being typed into, with the Edit toolbar in the corner. Next to it, the source file shows the same change as a one-line diff.</desc>
+  <desc id="desc">A wireframe web page in edit mode: a blue frame runs around the window with an "Edit mode" badge at the top, one paragraph is outlined and being typed into, and the toolbar in the bottom left corner shows Done and Saved. Next to it, the source file shows the same change as a one-line diff.</desc>
   <defs>
     <filter id="shadow" x="-40%" y="-40%" width="180%" height="220%">
       <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#1A1814" flood-opacity="0.10"/>
@@ -44,9 +44,7 @@
   <rect x="96" y="258" width="364" height="34" rx="8" fill="#26262B"/>
 
   <!-- the element being edited -->
-  <rect id="edit-box" x="86" y="320" width="284" height="42" rx="6" fill="#3B6CF6" fill-opacity="0.05" stroke="#3B6CF6" stroke-width="1.5"/>
-  <rect x="86" y="300" width="56" height="18" rx="4" fill="#3B6CF6"/>
-  <text x="114" y="313" text-anchor="middle" class="sans" font-size="11" font-weight="600" fill="#FFFFFF">Editing</text>
+  <rect id="edit-box" x="86" y="320" width="284" height="42" rx="6" fill="#3B6CF6" fill-opacity="0.05" stroke="#3B6CF6" stroke-width="2"/>
   <text id="edit-text" x="96" y="348" class="sans" font-size="22" fill="#18181B">Change the words yourself.</text>
   <rect id="caret" x="358" y="329" width="2" height="25" rx="1" fill="#3B6CF6"/>
 
@@ -62,14 +60,19 @@
   <path d="M398 556 L418 530 L432 546 L444 534 L462 556 Z" fill="#DAD7CF"/>
   <circle cx="452" cy="516" r="6" fill="#DAD7CF"/>
 
+  <!-- edit-mode frame around the viewport, and its badge -->
+  <path d="M49.5 106.5 H794.5 V608 a14.5 14.5 0 0 1 -14.5 14.5 H64 a14.5 14.5 0 0 1 -14.5 -14.5 Z" fill="none" stroke="#3B6CF6" stroke-width="3"/>
+  <path d="M318 105 H526 V123 a8 8 0 0 1 -8 8 H326 a8 8 0 0 1 -8 -8 Z" fill="#3B6CF6"/>
+  <text x="422" y="122" text-anchor="middle" class="sans" font-size="12" fill="#FFFFFF"><tspan font-weight="600">Edit mode</tspan><tspan fill-opacity="0.75"> · click any text</tspan></text>
+
   <!-- live-edit toolbar -->
   <g filter="url(#shadow)">
-    <rect x="64" y="568" width="160" height="36" rx="18" fill="#18181B"/>
+    <rect x="64" y="568" width="164" height="36" rx="18" fill="#18181B"/>
   </g>
-  <rect x="70" y="574" width="76" height="24" rx="12" fill="#3B6CF6"/>
-  <text x="108" y="590" text-anchor="middle" class="sans" font-size="12" font-weight="600" fill="#FFFFFF">Edit E</text>
-  <circle cx="161" cy="586" r="3.5" fill="#3DDC84"/>
-  <text x="171" y="590" class="sans" font-size="12" fill="#B4B1AA">Saved</text>
+  <rect x="70" y="574" width="84" height="24" rx="12" fill="#3B6CF6"/>
+  <text x="112" y="590" text-anchor="middle" class="sans" font-size="12" fill="#FFFFFF"><tspan font-weight="600">Done</tspan><tspan fill-opacity="0.75" dx="6">Esc</tspan></text>
+  <circle cx="168" cy="586" r="3.5" fill="#3DDC84"/>
+  <text x="178" y="590" class="sans" font-size="12" fill="#B4B1AA">Saved</text>
 
   <!-- connector -->
   <path d="M370 341 H 804" fill="none" stroke="#3B6CF6" stroke-width="1.6" stroke-dasharray="2 5" stroke-linecap="round" marker-end="url(#arrow)"/>
