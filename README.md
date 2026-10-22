@@ -50,7 +50,7 @@ Tested on macOS. Linux should work the same; Windows hasn't been tried yet.
 
 ```bash
 cd my-site
-npx github:lucadebort/live-edit#v0.1.0 . --open
+npx github:lucadebort/live-edit#v0.1.1 . --open
 ```
 
 The first run downloads and builds live-edit, which takes a minute. After that it
@@ -85,7 +85,7 @@ Point live-edit at the page or folder people are allowed to touch, and use
 `--root` to serve the whole site around it:
 
 ```bash
-npx github:lucadebort/live-edit#v0.1.0 landing --root . --open
+npx github:lucadebort/live-edit#v0.1.1 landing --root . --open
 ```
 
 The full site loads as usual, with its shared `/assets`, but the Edit button
@@ -104,11 +104,11 @@ Commit a small script to the site's repo, so nobody has to remember the command:
 #!/bin/bash
 # edit.sh: edit the landing page in the browser
 cd "$(dirname "$0")"
-exec npx --yes github:lucadebort/live-edit#v0.1.0 landing --root . --open "$@"
+exec npx --yes github:lucadebort/live-edit#v0.1.1 landing --root . --open "$@"
 ```
 
 Make it executable once with `chmod +x edit.sh`, and from then on a teammate
-runs `./edit.sh`. The `#v0.1.0` at the end pins the version, so an update
+runs `./edit.sh`. The `#v0.1.1` at the end pins the version, so an update
 here never changes things under their feet. Bump it when you want the new one.
 
 If you deploy by uploading a folder, check that your deploy script skips

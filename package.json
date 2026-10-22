@@ -1,6 +1,6 @@
 {
   "name": "live-edit",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Edit the text of a static HTML page in the browser, saved straight to the source file.",
   "scripts": {
     "build": "tsc -p tsconfig.json && tsc -p tsconfig.client.json",
