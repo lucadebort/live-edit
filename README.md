@@ -4,10 +4,16 @@
 
 **Click the text on your page. Type. It's saved in the HTML file.**
 
-A tiny local server that turns any static HTML site into an editable page,
+A tiny local server that makes a hand-written HTML site editable in the browser,
 and writes every change straight back into the source, one element at a time.
 
 </div>
+
+<br>
+
+> **Made for plain HTML files.** If your pages come from React, Next.js, Vue,
+> Svelte, Astro, Markdown or a CMS, live-edit can't save to them: there's no
+> HTML file to patch. Not sure? [Check in 30 seconds](#will-it-work-on-my-site).
 
 <br>
 
