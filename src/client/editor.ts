@@ -1,5 +1,5 @@
 /**
- * Injected by the live-edit server into every HTML page it serves.
+ * Injected by the Live Edit server into every HTML page it serves.
  * Every element that exists in the source carries a `data-le` id; an edit is
  * sent as an operation on that id and the server patches only that spot.
  */
