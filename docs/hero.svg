@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
-  <title id="title">live-edit</title>
+  <title id="title">Live Edit</title>
   <desc id="desc">A wireframe web page in edit mode: a blue frame runs around the window with an "Edit mode" badge at the top, one paragraph is outlined and being typed into, and the toolbar in the bottom left corner shows Done and Saved. Next to it, the source file shows the same change as a one-line diff.</desc>
   <defs>
     <filter id="shadow" x="-40%" y="-40%" width="180%" height="220%">
@@ -65,7 +65,7 @@
   <path d="M318 105 H526 V123 a8 8 0 0 1 -8 8 H326 a8 8 0 0 1 -8 -8 Z" fill="#3B6CF6"/>
   <text x="422" y="122" text-anchor="middle" class="sans" font-size="12" fill="#FFFFFF"><tspan font-weight="600">Edit mode</tspan><tspan fill-opacity="0.75"> · click any text</tspan></text>
 
-  <!-- live-edit toolbar -->
+  <!-- Live Edit toolbar -->
   <g filter="url(#shadow)">
     <rect x="64" y="568" width="164" height="36" rx="18" fill="#18181B"/>
   </g>

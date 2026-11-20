@@ -1,6 +1,6 @@
 <div align="center">
 
-# live-edit
+# Live Edit
 
 **Click the text on your page. Type. It's saved in the HTML file.**
 
@@ -12,7 +12,7 @@ and writes every change straight back into the source, one element at a time.
 <br>
 
 > **Made for plain HTML files.** If your pages come from React, Next.js, Vue,
-> Svelte, Astro, Markdown or a CMS, live-edit can't save to them: there's no
+> Svelte, Astro, Markdown or a CMS, Live Edit can't save to them: there's no
 > HTML file to patch. Not sure? [Check in 30 seconds](#will-it-work-on-my-site).
 
 <br>
@@ -27,7 +27,7 @@ Static sites are fast, cheap to host and last forever. The catch is copy: every
 typo, every new headline, every "can we say *five days* instead of *a week*?"
 goes back to whoever knows where the HTML lives.
 
-live-edit removes that step. Whoever owns the words opens the page, presses
+Live Edit removes that step. Whoever owns the words opens the page, presses
 **Edit**, and fixes it on the page itself, in the real layout, with the real
 fonts. What lands in the repo is a one-line diff in the file you'd have edited
 by hand.
@@ -39,14 +39,14 @@ No CMS, no database, no build step, no account. The site stays a folder of HTML.
 Take a sentence you'd like to change, open your `.html` files in a code editor
 and search for it.
 
-- **Found it, as plain text in an `.html` file?** live-edit will work.
-- **Found it in a `.jsx`, `.tsx`, `.vue`, `.svelte`, `.md` or `.mdx` file, or in a CMS?** It won't. The HTML your browser shows is generated, so there's no file for live-edit to patch.
+- **Found it, as plain text in an `.html` file?** Live Edit will work.
+- **Found it in a `.jsx`, `.tsx`, `.vue`, `.svelte`, `.md` or `.mdx` file, or in a CMS?** It won't. The HTML your browser shows is generated, so there's no file for Live Edit to patch.
 - **Found it only inside a `dist/`, `build/` or `out/` folder?** It will look like it works, but your next build will overwrite every change. Don't use it there.
 
 You also need:
 
 - **Node.js 22.18 or newer.** Check with `node --version`, get it from [nodejs.org](https://nodejs.org).
-- **git**, because `npx` downloads live-edit straight from this repository.
+- **git**, because `npx` downloads Live Edit straight from this repository.
 
 Tested on macOS. Linux should work the same; Windows hasn't been tried yet.
 
@@ -59,7 +59,7 @@ cd my-site
 npx github:lucadebort/live-edit#v0.1.2 . --open
 ```
 
-The first run downloads and builds live-edit, which takes a minute. After that it
+The first run downloads and builds Live Edit, which takes a minute. After that it
 starts in a second. Your browser opens on the site, served from
 `http://localhost:3000`.
 
@@ -76,7 +76,7 @@ copied into an `uploads/` folder next to the page.
 
 **3. Commit.** Every save is already in your `.html` files, so `git diff` shows
 exactly what changed. Commit and push the way you always do, including the
-`uploads/` folder if you replaced images. live-edit never commits, pushes or
+`uploads/` folder if you replaced images. Live Edit never commits, pushes or
 deploys anything for you.
 
 Stop the server with `Ctrl+C` in the terminal.
@@ -100,7 +100,7 @@ The previous text is saved as you leave it.
 
 ## Make only part of a site editable
 
-Point live-edit at the page or folder people are allowed to touch, and use
+Point Live Edit at the page or folder people are allowed to touch, and use
 `--root` to serve the whole site around it:
 
 ```bash
@@ -112,7 +112,7 @@ only appears on pages inside `landing/`. Everywhere else the server refuses to
 save, even if someone calls it directly.
 
 You need `--root` whenever your pages load files with absolute paths
-(`/assets/style.css`). Without it, live-edit serves only the `landing` folder and
+(`/assets/style.css`). Without it, Live Edit serves only the `landing` folder and
 those files come back as 404s, so the page shows up unstyled.
 
 ## Share it with your team
@@ -148,11 +148,11 @@ If you deploy by uploading a folder, check that your deploy script skips
 ```mermaid
 flowchart LR
   A[index.html<br>on disk] -->|tag every element<br>with its position| B[Page in<br>the browser]
-  B -->|"replace the text<br>of element 42"| C[live-edit<br>server]
+  B -->|"replace the text<br>of element 42"| C[Live Edit<br>server]
   C -->|patch only<br>that span| A
 ```
 
-live-edit never saves the page as the browser sees it. When it serves an HTML
+Live Edit never saves the page as the browser sees it. When it serves an HTML
 file it tags every element that exists in the source with an id (its position
 in the file) and injects the editor. An edit is sent as *replace the content of
 element 42*, and the server patches exactly that span. That means:
@@ -170,7 +170,7 @@ element 42*, and the server patches exactly that span. That means:
 
 ## Good fit, bad fit
 
-live-edit is built for one kind of site, on purpose.
+Live Edit is built for one kind of site, on purpose.
 
 | Works great | Doesn't work |
 | --- | --- |
@@ -180,13 +180,13 @@ live-edit is built for one kind of site, on purpose.
 | Sites deployed by uploading a folder | Anything that needs a build step to show the change |
 
 If what you see in the browser is generated, there is no single spot in an HTML
-file to patch, so live-edit can't help.
+file to patch, so Live Edit can't help.
 
 A few more limits worth knowing:
 
 - **Text only.** Bold, links and new elements still go through your code editor.
 - **`<picture>` sources.** Replacing an image changes the `<img>` only. If the page has `<source>` elements (WebP, AVIF), the browser keeps showing those until you update them too.
-- **Saving is not publishing.** live-edit writes the file. Committing, pushing and deploying stay your call.
+- **Saving is not publishing.** Live Edit writes the file. Committing, pushing and deploying stay your call.
 
 ## When something doesn't work
 
@@ -196,16 +196,16 @@ isn't in your HTML file: the page's JavaScript created it, or it comes from a
 framework. See [Will it work on my site?](#will-it-work-on-my-site)
 
 **There's no Edit button on the page.**
-The page is outside what you made editable. If you started live-edit with a
+The page is outside what you made editable. If you started Live Edit with a
 folder or a page plus `--root`, only that folder or page gets the button.
 
 **The page loads without styles or images.**
-Your site uses absolute paths like `/assets/...`. Start live-edit from the
+Your site uses absolute paths like `/assets/...`. Start Live Edit from the
 site's root folder, or add `--root .` (or `--root` plus the path to it).
 
 **"The file changed on disk. Reload the page."**
 The file was modified after the page loaded: in your editor, by a `git pull`,
-or by a teammate on a shared folder. live-edit refuses to save so it doesn't
+or by a teammate on a shared folder. Live Edit refuses to save so it doesn't
 overwrite that change. Reload and redo your last edit.
 
 **I replaced an image but the old one still shows.**
@@ -215,7 +215,7 @@ editor.
 
 **My changes disappeared after a build.**
 You were editing generated files (`dist/`, `build/`, `out/`). The build writes
-them again from the real sources, which live-edit can't reach.
+them again from the real sources, which Live Edit can't reach.
 
 **`npx` fails with a git or permission error.**
 Make sure git is installed (`git --version`) and that you can reach github.com.
@@ -224,7 +224,7 @@ Make sure git is installed (`git --version`) and that you can reach github.com.
 Install or update Node.js from [nodejs.org](https://nodejs.org), version 22.18 or newer.
 
 **Port 3000 is busy.**
-Nothing to do: live-edit takes the next free port and prints the address in the
+Nothing to do: Live Edit takes the next free port and prints the address in the
 terminal. Use `--port` to pick one yourself.
 
 **I want to undo a save.**

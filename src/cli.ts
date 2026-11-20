@@ -6,7 +6,7 @@ import { parseArgs } from "node:util";
 import { startServer } from "./server.ts";
 
 const HELP = `
-live-edit: edit the text of a static HTML page in the browser, saved to the source file.
+Live Edit: edit the text of a static HTML page in the browser, saved to the source file.
 
 Usage
   live-edit [page.html | folder] [options]
@@ -70,7 +70,7 @@ const { url, backups } = await startServer({
 });
 
 console.log(`
-  live-edit   ${url}
+  Live Edit   ${url}
   serving     ${root}${entry ? `\n  editable    ${entry}` : ""}
   backups     ${backups}
 
